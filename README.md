@@ -32,3 +32,11 @@ go build
 
 execute the binary generated.
 
+Accessing the UI
+
+Open INDEX.html. It has links to register and login. Register first and then it is redirected to login.
+
+Enter the username and password to login and now it is redirected to todo.html
+
+It has a textbox to enter the todo and store it in the server.
+
