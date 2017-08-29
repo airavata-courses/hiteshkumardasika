@@ -1,0 +1,5 @@
+entry/User.class
+props/StringConstants.class
+entry/RegisterService.class
+entry/AppMain.class
+entry/MainController.class
