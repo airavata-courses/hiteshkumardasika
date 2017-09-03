@@ -11,28 +11,31 @@ Install Docker
 
 docker run --name mysql-cont -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5
 
-Micro-Service One: JAVA
+<h1> Micro-Service One: JAVA </h1>
+<br/>
+<p> Go to microservice_one directory. Execute the run_msone.sh using the command <br/>
+ <code> bash run_msone.sh</code>
 
 The Microservice is a spring application. It is located in microservice_one directory.
+<br/>
+<code> docker run -it -p 5484:8080 --name app_new --link mysql-cont:db ms_one </code>
 
-docker run -it -p 5484:8080 --name app_new --link mysql-cont:db msone
+<h2>Micro-service Two: Python</h2>
 
-Micro-service Two: Python
+This microservice is a flask-mysql application. It is located in microservice_two directory.<br/>
+<code>docker run -it -p 5001:5000 --name app_2 --link mysql-cont:db ms2</code>
 
-This microservice is a flask-mysql application. It is located in microservice_two directory.
-docker run -it -p 5001:5000 --name app_2 --link mysql-cont:db ms2
-
-Micro-service Three: Go 
+<h3>Micro-service Three: Go </h3>
 
 This microservice is in go language. It is located in microservice_three directory
 
-cd microservice_three
+ <code>cd microservice_three</code>
 
-go build
+<code>go build</code>
 
 execute the binary generated.
 
-Accessing the UI
+<h1>Accessing the UI</h1>
 
 Open INDEX.html. It has links to register and login. Register first and then it is redirected to login.
 
