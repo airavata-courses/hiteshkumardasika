@@ -1,6 +1,6 @@
 # airavata-assignment1
 The project contains three micro services written in Java,Python and Go respectively.
-Pre-requisite
+<h2>Pre-requisite</h2>
 
 Install go
 
@@ -8,8 +8,7 @@ Install Java
 
 Install Docker
 
-
-docker run --name mysql-cont -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5
+<code>docker run --name mysql-cont -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5</code>
 
 <h1> Micro-Service One: JAVA </h1>
 <br/>
