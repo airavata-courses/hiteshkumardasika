@@ -29,10 +29,13 @@ This microservice is a flask-mysql application. It is located in microservice_tw
 This microservice is in go language. It is located in microservice_three directory
 
  <code>cd microservice_three</code>
+ 
+ <code>go get github.com/rs/cors</code>
 
 <code>go build</code>
 
-execute the binary generated.
+execute the binary generated. <br/>
+
 
 <h1>Accessing the UI</h1>
 
