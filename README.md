@@ -23,6 +23,7 @@ The Microservice is a spring application. It is located in microservice_one dire
 
 This microservice is a flask-mysql application. It is located in microservice_two directory.<br/>
 <code>cd microservice_two</code><br/>
+<code>cd docker</code><br/>
 <code>docker build -t ms2 . </code><br/>
 <code>docker run -it -p 5001:5000 --name app_2 --link mysql-cont:db ms2</code>
 
