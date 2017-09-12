@@ -40,18 +40,12 @@ public class MainController {
 
     @RequestMapping(value = "/item", method = RequestMethod.POST, consumes = "text/plain")
     public String createTodoItem(@RequestBody String payload) throws Exception {
-/*
-        URL url = new URL("http://localhost:5000/item");
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestMethod("POST");
-*/
-
-        return new RPCClient().call(payload);
+        return new RPCClient().call(payload,"insert");
     }
 
-    @RequestMapping(value = "/item/{userId}", method = RequestMethod.GET, consumes = "text/plain")
+    @RequestMapping(value = "/item/{userId}", method = RequestMethod.GET)
     public String fetchTodoItem(@PathVariable("userId") String userId) throws Exception {
-        return new RPCClient().call(userId);
+        return new RPCClient().call(userId,"fetch");
     }
 
 }

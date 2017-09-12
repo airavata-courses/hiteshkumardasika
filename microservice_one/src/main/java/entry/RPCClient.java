@@ -24,9 +24,9 @@ public class RPCClient {
         replyQueueName = channel.queueDeclare().getQueue();
     }
 
-    public String call(String payload) throws IOException, InterruptedException {
+    public String call(String payload, String purpose) throws IOException, InterruptedException {
         final String corrId = UUID.randomUUID().toString();
-
+        payload = payload + "-"+purpose;
         AMQP.BasicProperties props = new AMQP.BasicProperties
                 .Builder()
                 .correlationId(corrId)
