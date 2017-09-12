@@ -70,7 +70,6 @@ def createProduct(userId, item):
     return json.dumps({'userId': data.userId, 'item': data.item})
 
 
-@app.route('/item/<string:userId>', methods=['GET'])
 def getProduct(userId):
     mysql.init_app(app)
     data = TodoItem.query.filter_by(userId=userId)  # fetch all products on the table
@@ -80,7 +79,7 @@ def getProduct(userId):
     for todoItem in data:
         data_all.append([todoItem.itemId, todoItem.userId, todoItem.item])  # prepare visual data
 
-    return jsonify(products=data_all)
+    return json.dumps({'products':data_all})
 
 
 def createProductFromRabbitMQ(userId, item):
@@ -89,11 +88,21 @@ def createProductFromRabbitMQ(userId, item):
     result = createProduct(userId, item)
     return result
 
+def fetchItems(userId):
+    print "Trying to fetch some data"
+    return getProduct(userId)
 
 def on_request(ch, method, props, body):
     print("I entered the on_request method"+body)
-    item = json.loads(body)
-    response = createProductFromRabbitMQ(item['userId'], item['item'])
+    bodyStr = str(body)
+    data = bodyStr[bodyStr.index('-')+1:]
+    purpose = bodyStr[:bodyStr.index('-')+1]
+
+    if purpose.__eq__("insert"):
+        item = json.loads(data)
+        response = createProductFromRabbitMQ(item['userId'], item['item'])
+    elif purpose.__eq__("fetch"):
+        response = fetchItems(data)
 
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,

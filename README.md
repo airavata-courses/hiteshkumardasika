@@ -8,7 +8,9 @@ Install Java
 
 Install Docker
 
-<code>docker run --name mysql-cont -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5</code>
+<code>docker run --name mysql-cont -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5</code><br/>
+
+<code>docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management</code>
 
 <h1> Micro-Service One: JAVA </h1>
 <br/>
