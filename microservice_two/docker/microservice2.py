@@ -77,9 +77,9 @@ def getProduct(userId):
     data_all = []
 
     for todoItem in data:
-        data_all.append([todoItem.itemId, todoItem.userId, todoItem.item])  # prepare visual data
+        data_all.append(todoItem.item)  # prepare visual data
 
-    return json.dumps({'products':data_all})
+    return json.dumps({data_all})
 
 
 def createProductFromRabbitMQ(userId, item):
@@ -96,13 +96,18 @@ def on_request(ch, method, props, body):
     print("I entered the on_request method"+body)
     bodyStr = str(body)
     data = bodyStr[bodyStr.index('-')+1:]
-    purpose = bodyStr[:bodyStr.index('-')+1]
+    purpose = bodyStr[:bodyStr.index('-')]
 
-    if purpose.__eq__("insert"):
+    if purpose == "insert":
         item = json.loads(data)
+        print "the value here is "+ str(item)
         response = createProductFromRabbitMQ(item['userId'], item['item'])
-    elif purpose.__eq__("fetch"):
+    elif purpose == "fetch":
+        print "the value in elif is "+data
         response = fetchItems(data)
+    else:
+        print "the value in else is "+ purpose + " and "+data
+        response = "Do nothing!!"
 
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,

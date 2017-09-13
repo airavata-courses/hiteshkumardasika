@@ -23,7 +23,7 @@ public class RegisterService {
     }
 
     public String checkIfUserLoggedIn(String userName, String password) {
-        String getQuery = "SELECT * FROM todo_db.user WHERE userName= " + "''"+userName+"''" + " and password= " + "''"+password+"''" + ";";
+        String getQuery = "SELECT * FROM todo_db.user WHERE userName= " + "'"+userName+"'" + " and password= " + "'"+password+"'" + ";";
         List query = jdbcTemplate.query(getQuery, new BeanPropertyRowMapper(User.class));
         if (query.size()>0){
             return "Success Logged IN!!";
