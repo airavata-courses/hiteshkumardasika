@@ -1,6 +1,9 @@
 import ConfigParser
+import flask_cors
+import random
 import pika
 import json
+
 
 from flask_cors import CORS, cross_origin
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -8,7 +11,6 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 CORS(app)
-
 # Read config file
 config = ConfigParser.ConfigParser()
 config.read('/app/todo_db.conf')
@@ -37,7 +39,7 @@ class TodoItem(mysql.Model):
     item = mysql.Column(mysql.String(500), nullable=False)
 
     def __repr__(self):
-        return '<todoList (%s, %s, %s) >' % (self.userId, self.itemId, self.item)
+        return '<todoList (%s, %s, %s) >' % (self.userId, self.itemId,self.item)
 
 
 @app.route('/')
@@ -77,7 +79,7 @@ def getProduct(userId):
     data_all = []
 
     for todoItem in data:
-        data_all.append(todoItem.item)  # prepare visual data
+        data_all.append([todoItem.itemId, todoItem.userId, todoItem.item]) #prepare visual data
 
     return json.dumps({data_all})
 
