@@ -1,5 +1,6 @@
 import ConfigParser
 import flask_cors
+import random
 
 from flask_cors import CORS, cross_origin
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -29,7 +30,7 @@ class TodoItem(mysql.Model):
     item = mysql.Column(mysql.String(500), nullable=False)
 
     def __repr__(self):
-        return '<todoList (%s, %s, %s) >' % (self.userId, self.itemId,self.item)
+        return '<todoList (%s, %s, %s) >' % (self.userId, self.itemId, self.item)
 
 
 @app.route('/')
@@ -43,8 +44,8 @@ def createProduct():
     # fetch userId and item to be inserted
     userId = request.get_json()["userId"]
     item = request.get_json()["item"]
-
-    todoItem = TodoItem(itemId=1,userId=userId, item=item)
+    itemId = str(random.randint(0, 50))
+    todoItem = TodoItem(itemId=itemId, userId=userId, item=item)
 
     curr_session = mysql.session  # open database session
     try:
@@ -54,28 +55,21 @@ def createProduct():
         curr_session.rollback()
         curr_session.flush()  # for resetting non-commited .add()
 
-    itemId_last = todoItem.itemId  # fetch last inserted id
-    data = todoItem.query.filter_by(itemId=itemId_last).first()  # fetch our inserted product
+    return "success"
 
-    config.read('/root/PycharmProjects/microservice2/todo_db.conf')
-
-    result = [data.userId, data.item]  # prepare visual data
-
-    return jsonify(curr_session=result)
 
 @app.route('/item/<string:userId>', methods=['GET'])
 def getProduct(userId):
     mysql.init_app(app)
-    data = TodoItem.query.filter_by(userId=userId) #fetch all products on the table
+    data = TodoItem.query.filter_by(userId=userId)  # fetch all products on the table
 
     data_all = []
 
     for todoItem in data:
-        data_all.append([todoItem.itemId, todoItem.userId, todoItem.item]) #prepare visual data
+        data_all.append([todoItem.itemId, todoItem.userId, todoItem.item])  # prepare visual data
 
     return jsonify(products=data_all)
 
 
 if __name__ == '__main__':
-    app.run()
-
+    app.run(host='0.0.0.0', port=5000)

@@ -17,5 +17,5 @@ func main(){
     // all origins accepted with simple methods (GET, POST). See
     // documentation below for more options.
     handler := cors.Default().Handler(mux)
-    log.Fatal(http.ListenAndServe(":8086", handler))
+    log.Fatal(http.ListenAndServe("0.0.0.0:8086", handler))
 }
