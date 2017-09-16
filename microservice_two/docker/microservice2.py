@@ -16,7 +16,7 @@ config = ConfigParser.ConfigParser()
 config.read('/app/todo_db.conf')
 
 # RabbitMQ Configuration
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
 channel = connection.channel()
 channel.queue_declare(queue='rpc_queue')
 

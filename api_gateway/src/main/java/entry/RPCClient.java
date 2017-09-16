@@ -9,19 +9,28 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeoutException;
 
 public class RPCClient {
-    private Connection connection;
-    private Channel channel;
-    private String requestQueueName = "rpc_queue";
-    private String replyQueueName;
+    private Connection connection, connection_1;
+    private Channel channel, channel_1;
+    private String requestQueueName = "rpc_queue", requestQueueName_1 = "rpc_queue_1";
+    private String replyQueueName, replyQueueName_1;
 
     public RPCClient() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("my-rabbit");
+        factory.setHost("127.0.0.1");
 
         connection = factory.newConnection();
         channel = connection.createChannel();
 
         replyQueueName = channel.queueDeclare().getQueue();
+
+        //For new Connection
+        ConnectionFactory factory_1 = new ConnectionFactory();
+        factory_1.setHost("127.0.0.1");
+
+        connection_1 = factory.newConnection();
+        channel_1 = connection_1.createChannel();
+
+        replyQueueName_1 = channel_1.queueDeclare().getQueue();
     }
 
     public String call(String payload, String purpose) throws IOException, InterruptedException {
@@ -49,20 +58,20 @@ public class RPCClient {
         return response.take();
     }
 
-    public String callForItems(String userId) throws IOException, InterruptedException {
+    public String callForOtherOperations(String payload, String purpose) throws IOException, InterruptedException {
         final String corrId = UUID.randomUUID().toString();
-
+        payload = purpose + "-" + payload;
         AMQP.BasicProperties props = new AMQP.BasicProperties
                 .Builder()
                 .correlationId(corrId)
-                .replyTo(replyQueueName)
+                .replyTo(replyQueueName_1)
                 .build();
 
-        channel.basicPublish("", requestQueueName, props, userId.getBytes("UTF-8"));
+        channel_1.basicPublish("", requestQueueName_1, props, payload.getBytes("UTF-8"));
 
         final BlockingQueue<String> response = new ArrayBlockingQueue<String>(1);
 
-        channel.basicConsume(replyQueueName, true, new DefaultConsumer(channel) {
+        channel_1.basicConsume(replyQueueName_1, true, new DefaultConsumer(channel_1) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 if (properties.getCorrelationId().equals(corrId)) {

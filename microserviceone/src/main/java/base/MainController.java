@@ -5,17 +5,25 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @CrossOrigin(origins = "*")
 @RequestMapping("/fb")
-
 public class MainController {
 
     @Autowired
     CRUDService crudService;
+
+    @Autowired
+    RPCServer rpcServer;
+
+    @PostConstruct
+    public void init(){
+        rpcServer.startServer();
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String test() {
