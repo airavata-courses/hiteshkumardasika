@@ -13,7 +13,8 @@ pipeline {
 sudo docker stop mysql-cont || true && sudo docker rm mysql-cont || true
 sudo docker run --name mysql-cont --net="host" -p 3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5
 sudo docker run -d --hostname my-rabbit --name some-rabbit --net="host" -p 5672 -p 15672 rabbitmq:3-management
-sudo apt install maven
+sudo export DEBIAN_FRONTEND=noninteractive
+sudo apt-get -y install maven
 cd microserviceone
 sudo bash run_msone.sh
 cd ..
