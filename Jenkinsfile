@@ -1,7 +1,12 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'my_node'
+    }
+    
+  }
   stages {
-    stage('error') {
+    stage('My_Stages') {
       steps {
         git(url: 'https://github.com/airavata-courses/hiteshkumardasika.git', branch: 'Assignment_2')
         sh '''docker run --name mysql-cont --net="host" -p 3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5
