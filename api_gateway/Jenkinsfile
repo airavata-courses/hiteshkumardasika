@@ -1,0 +1,21 @@
+node {
+    agent {label 'my_node'}
+    stages{
+    stage('build api gateway') {
+        cd api_gateway
+        sh run_gateway.sh
+    }
+    stage('build microservice one') {
+        cd microserviceone
+        sh run_msone.sh
+    }
+    stage('build microservice two') {
+        cd microservice_two
+        sh run_mstwo.sh
+    }
+    stage('build microservice three') {
+        cd api_gateway
+        sh run_msthree.sh
+    }
+    }
+}

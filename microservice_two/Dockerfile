@@ -1,10 +1,11 @@
 FROM ubuntu:16.04
 
-MAINTANER Your Name "youremail@domain.tld"
 
-RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev && \
-    apt-get install -y python-mysqldb
+RUN apt-get update -y
+
+RUN apt-get install -y python-pip python-dev
+
+RUN apt-get install -y python-mysqldb
 
 # We copy just the requirements.txt first to leverage Docker cache
 COPY ./requirements.txt /app/requirements.txt
@@ -13,10 +14,11 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-COPY . /app
+COPY ./todo_db.conf /app
+COPY ./microservice2.py /app
 
 EXPOSE 5000
-ENTRYPOINT [ "python" ]
+#ENTRYPOINT [ "python" ]
 
-CMD [ "app.py" ]
+CMD [ "python","/app/microservice2.py" ]
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-docker rm gateway_cont
+docker rm -f gateway_cont
 docker rmi gateway_img
 mvn clean install
 docker build -t gateway_img .

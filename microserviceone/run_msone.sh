@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-docker rm ms_one_cont
+docker rm -f ms_one_cont
 docker rmi ms_one
 mvn clean install
 docker build -t ms_one .

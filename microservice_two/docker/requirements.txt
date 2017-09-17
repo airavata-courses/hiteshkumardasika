@@ -1,4 +1,0 @@
-flask
-Flask-SQLAlchemy
-flask_cors
-pika
