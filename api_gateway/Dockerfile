@@ -37,4 +37,3 @@ EXPOSE 8084
 #ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","start"]
 CMD ["/usr/local/tomcat/bin/catalina.sh","run"]
 
-`
