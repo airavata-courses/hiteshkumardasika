@@ -25,6 +25,8 @@ sudo bash run_msthree.sh
 cd ..
 cd api_gateway
 sudo bash run_gateway.sh
+cd ..
+sudo bash run_ui.sh
 '''
       }
     }
