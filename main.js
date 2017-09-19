@@ -2,7 +2,7 @@ function makeFbLogin() {
     var un = document.getElementById("email").value;
     var pw = document.getElementById("pwd").value;
     sessionStorage.setItem("userId", un);
-    var url = "http://127.0.0.1:8080/apigateway-1/fb/" + un + "/" + pw;
+    var url = "http://localhost:8084/apigateway-1/fb/" + un + "/" + pw;
     /*
         var xhttp = new XMLHttpRequest();
         xhttp.open("GET", url, false);
@@ -34,7 +34,7 @@ function registerUser() {
     var scrName = document.getElementById("screenName").value;
     var email = document.getElementById("email").value;
     var pwd = document.getElementById("pwd").value;
-    var url = "http://127.0.0.1:8080/apigateway-1/fb";
+    var url = "http://localhost:8084/apigateway-1/fb";
     $.ajax({
         headers: {
             'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ function insertItem() {
         headers: {
             'Content-Type': 'text/plain'
         },
-        url: "http://127.0.0.1:8080/apigateway-1/fb/item",
+        url: "http://localhost:8084/apigateway-1/fb/item",
         type: 'POST',
         data: JSON.stringify({"userId": id, "item": item}),
         success: function success(data) {
@@ -75,7 +75,7 @@ function insertItem() {
 
 function fetchAllItems(userId) {
     $.ajax({
-        url: "http://127.0.0.1:8080/apigateway-1/fb/item/" + userId,
+        url: "http://localhost:8084/apigateway-1/fb/item/" + userId,
         type: 'GET',
         success: function success(data) {
             listItems = JSON.parse(data)
@@ -89,7 +89,7 @@ function fetchAllItems(userId) {
 
 function loadFooter() {
     $.ajax({
-        url: "http://127.0.0.1:8086/",
+        url: "http://localhost:8086/",
         type: 'GET',
         success: function success(data) {
             console.log(data)
@@ -102,7 +102,7 @@ function loadFooter() {
 function deleteItem() {
     var itemId = document.getElementById("itemId").value;
     $.ajax({
-        url: "http://127.0.0.1:8080/apigateway-1/fb/item/" + itemId,
+        url: "http://localhost:8084/apigateway-1/fb/item/" + itemId,
         type: 'DELETE',
         success: function success(data) {
             fetchAllItems(sessionStorage.getItem("userId"))
