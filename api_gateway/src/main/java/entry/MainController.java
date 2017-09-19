@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-@RestController
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/fb")
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 public class MainController {
 
     @Autowired
@@ -20,7 +19,7 @@ public class MainController {
         return "working";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     public String registerUser(@RequestBody User user) {
         registerService.registerUser(user);
         return "{ \"result\":\"success\"}";
@@ -43,12 +42,12 @@ public class MainController {
 
     @RequestMapping(value = "/item/{itemId}", method = RequestMethod.DELETE)
     public String deleteTodoItem(@PathVariable("itemId") String itemId) throws Exception {
-        return new RPCClient().callForOtherOperations(itemId,"delete");
+        return new RPCClient().callForOtherOperations(itemId, "delete");
     }
 
     @RequestMapping(value = "/item/{searchTerm}", method = RequestMethod.POST)
     public String searchForItem(@PathVariable("searchTerm") String searchTerm) throws Exception {
-        return new RPCClient().callForOtherOperations(searchTerm,"search");
+        return new RPCClient().callForOtherOperations(searchTerm, "search");
     }
 
 

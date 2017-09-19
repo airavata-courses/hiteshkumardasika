@@ -51,8 +51,9 @@ def createProduct(userId, item):
     mysql.init_app(app)
     mysql.app = app
     # fetch userId and item to be inserted
+    itemId = str(random.randint(0, 50))
 
-    todoItem = TodoItem(itemId=1, userId=userId, item=item)
+    todoItem = TodoItem(itemId=itemId, userId=userId, item=item)
 
     curr_session = mysql.session  # open database session
     try:
@@ -74,6 +75,7 @@ def createProduct(userId, item):
 
 def getProduct(userId):
     mysql.init_app(app)
+    mysql.app = app
     data = TodoItem.query.filter_by(userId=userId)  # fetch all products on the table
 
     data_all = []
@@ -81,7 +83,7 @@ def getProduct(userId):
     for todoItem in data:
         data_all.append([todoItem.itemId, todoItem.userId, todoItem.item]) #prepare visual data
 
-    return json.dumps({data_all})
+    return json.dumps(data_all)
 
 
 def createProductFromRabbitMQ(userId, item):

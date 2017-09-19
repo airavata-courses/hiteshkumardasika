@@ -2,7 +2,7 @@ function makeFbLogin() {
     var un = document.getElementById("email").value;
     var pw = document.getElementById("pwd").value;
     sessionStorage.setItem("userId", un);
-    var url = "http://localhost:5484/apigateway-1/fb/" + un + "/" + pw;
+    var url = "http://127.0.0.1:8080/apigateway-1/fb/" + un + "/" + pw;
     /*
         var xhttp = new XMLHttpRequest();
         xhttp.open("GET", url, false);
@@ -15,6 +15,9 @@ function makeFbLogin() {
     //alert(response)
 
     $.ajax({
+        headers: {
+            'Content-Type': 'application/json'
+        },
         url: url,
         type: 'GET',
         success: function success(data) {
@@ -31,13 +34,13 @@ function registerUser() {
     var scrName = document.getElementById("screenName").value;
     var email = document.getElementById("email").value;
     var pwd = document.getElementById("pwd").value;
-    var url = "http://localhost:5484/apigateway-1/fb";
+    var url = "http://127.0.0.1:8080/apigateway-1/fb";
     $.ajax({
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         url: url,
+        crossDomain: true,
         type: 'POST',
         data: JSON.stringify({"userId": id, "userName": name, "email": email, "password": pwd, "screenName": scrName}),
         success: function success(data) {
@@ -46,7 +49,7 @@ function registerUser() {
             window.location.href = "login.html"
         },
         error: function errorTest(data) {
-            console.log("herere" + data.toString())
+            console.log("herere" + data.toSt+ring())
         }
     })
 
@@ -57,9 +60,9 @@ function insertItem() {
     var item = document.getElementById("item").value;
     $.ajax({
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'text/plain'
         },
-        url: "http://localhost:5484/apigateway-1/fb/item",
+        url: "http://127.0.0.1:8080/apigateway-1/fb/item",
         type: 'POST',
         data: JSON.stringify({"userId": id, "item": item}),
         success: function success(data) {
@@ -72,13 +75,13 @@ function insertItem() {
 
 function fetchAllItems(userId) {
     $.ajax({
-        url: "http://localhost:5484/apigateway-1/fb/item/" + userId,
+        url: "http://127.0.0.1:8080/apigateway-1/fb/item/" + userId,
         type: 'GET',
         success: function success(data) {
             listItems = JSON.parse(data)
             console.log(data)
             console.log(listItems)
-            $("#myarea").html(listItems.products.toString())
+            $("#myarea").html(data)
         }
     });
 
@@ -86,7 +89,7 @@ function fetchAllItems(userId) {
 
 function loadFooter() {
     $.ajax({
-        url: "http://localhost:8086/",
+        url: "http://127.0.0.1:8086/",
         type: 'GET',
         success: function success(data) {
             console.log(data)
@@ -99,7 +102,7 @@ function loadFooter() {
 function deleteItem() {
     var itemId = document.getElementById("itemId").value;
     $.ajax({
-        url: "http://localhost:5484/apigateway-1/fb/item/" + itemId,
+        url: "http://127.0.0.1:8080/apigateway-1/fb/item/" + itemId,
         type: 'DELETE',
         success: function success(data) {
             fetchAllItems(sessionStorage.getItem("userId"))

@@ -33,7 +33,8 @@ RUN set -x \
 
 ADD ./target/*.war $CATALINA_HOME/webapps/
 ADD server.xml /usr/local/tomcat/conf/
-EXPOSE 8080
+EXPOSE 8084
 #ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","start"]
 CMD ["/usr/local/tomcat/bin/catalina.sh","run"]
 
+`

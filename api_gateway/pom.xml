@@ -17,8 +17,8 @@
         </plugins>
     </build>
     <groupId>com.microservice.fb</groupId>
-    <artifactId>microserviceone</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>apigateway</artifactId>
+    <version>1</version>
     <!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -40,7 +40,7 @@ public class RPCServer {
                             .correlationId(properties.getCorrelationId())
                             .build();
 
-                    String response = "";
+                    String response = "success";
 
                     try {
                         String message = new String(body, "UTF-8");
