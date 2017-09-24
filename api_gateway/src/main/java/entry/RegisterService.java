@@ -15,7 +15,7 @@ public class RegisterService {
     JdbcTemplate jdbcTemplate;
 
     public void registerUser(User user) {
-        String insertQurey = "INSERT INTO user (userId, userName, email, password, screenName) VALUES(?, ?, ?, ?, ?)";
+        String insertQurey = "INSERT INTO todo_db.user (userId, userName, email, password, screenName) VALUES(?, ?, ?, ?, ?)";
 
         Object[] params = new Object[]{user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getScreenName()};
         int[] types = new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,};
